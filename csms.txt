@@ -1,0 +1,490 @@
+DROP DATABASE IF EXISTS csms; -- Car Showroom Management System
+CREATE DATABASE IF NOT EXISTS csms;
+USE csms;
+ -- Car Showroom Management System
+
+CREATE TABLE userAccount(
+       id_userAccount INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+       firstName VARCHAR(30),
+       lastName VARCHAR(30),
+       Email  VARCHAR(30) ,
+       passWordU VARCHAR(30),
+       city VARCHAR(30),
+       Addressu VARCHAR(30),
+       phone VARCHAR(30),
+       dealerImg VARCHAR(100),
+       COGS double,
+       OE double,
+       O double,
+       TAXES double,
+       type INT -- 1 dealer ,2 user
+);
+
+INSERT INTO useraccount VALUES (NULL,'Ahmad','Ali','ahmad@gmail.com','233','Dubai','Al-Zohor Street','0923456197','dealer.png',41,2,2,2,1);
+INSERT INTO useraccount VALUES (NULL,'Rami','Dani','rami@gmail.com','731','Dubai','Al-Zohor Street','092967562','dealer.png',43,4,2,3,1);
+INSERT INTO useraccount VALUES (NULL,'Hassan','Tamer','Hassan@gmail.com','34535','Dubai','Boulevard Street','092969621',NULL,NULL,NULL,NULL,NULL,2);
+INSERT INTO useraccount VALUES (NULL,'Fadi','Dani','fadi@gmail.com','33542','Abu Dhabi','Al-Zohor Street','09254337236',NULL,NULL,NULL,NULL,NULL,2);
+INSERT INTO useraccount VALUES (NULL,'Dani','Abd','dani@gmail.com','564232','Dubai','Diyafah Street','0923456197','dealer.png',45,3,3,2,1);
+INSERT INTO useraccount VALUES (NULL,'JANA','Fadi','jana@gmail.com','43114','Dubai','Boulevard Street','09296497','dealer.png',42,4,4,1,1);   
+INSERT INTO useraccount VALUES (NULL,'Nadia','Fadi','nadia@gmail.com','2462','Abu Dhabi','Al-Zohor Street','092964434',NULL,NULL,NULL,NULL,NULL,2);
+INSERT INTO useraccount VALUES (NULL,'Khaled','Omar','khaled@gmail.com','4353','Dubai','Diyafah Street','0928524152',NULL,NULL,NULL,NULL,NULL,2); 
+ CREATE TABLE messages(
+     id_messages INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+     messageDate DATETIME,
+     text_messages VARCHAR(100),
+     id_dealer INT,
+     id_client INT,
+     CONSTRAINT messages_FORIGN_KEY FOREIGN KEY (id_dealer) REFERENCES userAccount(id_userAccount),
+     CONSTRAINT messages_FORIGN_KEY2 FOREIGN KEY (id_client) REFERENCES userAccount(id_userAccount)
+);
+
+INSERT INTO messages VALUES (NULL, '2022-12-12 10:00:00','The car has been purchased',1,3);
+INSERT INTO messages VALUES (NULL, '2022-7-8 14:36:00','You do not have enough money to buy a car',2,4);
+INSERT INTO messages VALUES (NULL, '2022-3-12 10:05:00','The car has been purchased',5,3);
+INSERT INTO messages VALUES (NULL, '2022-2-13 04:30:01','You do not have enough money to buy a car',6,7);
+
+CREATE TABLE car_Card(
+    id_car_Card INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    srcCC VARCHAR(100),
+    classCC VARCHAR(30),
+    yearC INT ,
+    carName VARCHAR(30),
+    carModel VARCHAR(100),
+    price DOUBLE,
+    mpg VARCHAR(100)
+);
+INSERT INTO car_card VALUES (NULL,'Highlander.png','Crossovers & SUVs',2023,'Highlander','LE',36.420,'Up to an EPA-estimated 22/29 city/hwy mpg');
+INSERT INTO car_card VALUES (NULL,'HighlanderHybrid.png','Crossovers & SUVs',2023,'Highlander Hybrid','Hybrid LE',40.220,'Up to an EPA-estimated 36 combined mpg');
+INSERT INTO car_card VALUES (NULL,'ToyotaCrown.png','Cars & Minivan',2023,'Toyota Crown','XLE',39.950,'Up to an EPA-Estimated 41 MPG Combined Rating');
+INSERT INTO car_card VALUES (NULL,'PriusPrime.png','Cars & Minivan',2022,'Prius Prime','LE',28.770,'Up to an EPA-estimated 22/29 city/hwy mpg');
+INSERT INTO car_card VALUES (NULL,'Tacoma.png','Trucks',2023,'Tacoma','SR',27.250,NULL);
+INSERT INTO car_card VALUES (NULL,'PriusPrime2.png','Trucks',2023,'Prius Prime','SR',37.865,NULL);
+
+
+INSERT INTO car_card VALUES (NULL,'Highlanderxle.png','Crossovers & SUVs',2023,'Highlander','Hybrid XLE',41.820,'Up to an EPA-estimated 22/29 city/hwy mpg');
+INSERT INTO car_card VALUES (NULL,'HighlanderHybridbe.png','Crossovers & SUVs',2023,'Highlander Hybrid','Bronze Edition',45.920,'Up to an EPA-estimated 36 combined mpg');
+INSERT INTO car_card VALUES (NULL,'ToyotaCrownl.png','Cars & Minivan',2023,'Toyota Crown','Limited',45.550,'Up to an EPA-Estimated 41 MPG Combined Rating');
+INSERT INTO car_card VALUES (NULL,'PriusPrimexle.png','Cars & Minivan',2022,'Prius Prime','XLE',30.550,'Up to an EPA-estimated 22/29 city/hwy mpg');
+INSERT INTO car_card VALUES (NULL,'Tacomal.png','Trucks',2023,'Tacoma','Limited',40.505,NULL);
+INSERT INTO car_card VALUES (NULL,'PriusPrimesr5.png','Trucks',2023,'Prius Prime','SR5',60.005,NULL);
+
+
+CREATE TABLE Car_Features(
+    id_Car_Features INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    feature VARCHAR(150),
+    article VARCHAR(300),
+    classCF VARCHAR(50),
+    srcCF VARCHAR(100),
+    id_car_Card INT,
+  CONSTRAINT Features_FORIGN_KEY FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)  
+);
+INSERT INTO car_features VALUES (NULL,'Captivating Exterior Design',
+'Highlander’s bold design is hard to ignore. Its sculpted shape and contoured lines display the perfect balance between power and refinement. Now available in the Cypress color, it sets a new standard for curb appeal. Get ready to turn heads wherever you go.'
+,'Exterior','HighlanderExterior.png',1);
+INSERT INTO car_features VALUES (NULL,'12.3” Fully Digital Gauge Cluster',
+'Standard on Limited and Platinum, the 12.3-in. fully digital gauge cluster presents turn-by-turn directions, safety info, alerts and more, all at a glance, so you can keep your eyes on the road.'
+,'Interior','HighlanderInterior.png',1);
+INSERT INTO car_features VALUES (NULL,'12.3-In. Toyota Audio Multimedia Display',
+'The available 12.3-in. multimedia display is your hub for accessing playlists, podcasts and entertainment options with ease. As you make your way to your destination, you can stay connected with mobile apps on demand. Best of all, Highlander allows you to access its system controls with the sound of your voice.'
+,'Technology','HighlanderTechnology.png',1);
+
+
+INSERT INTO car_features VALUES (NULL,'Highlander Hybrid Bronze Edition',
+'Make a grand entrance wherever you go with the Highlander Hybrid Bronze Edition. From the 18-in. bronze-finished wheels to the mid-century-inspired embossed fabric seat inserts and bronze-colored stitching throughout the cabin, this special edition is decorated with subtle yet eye-catching details inside and out.'
+,'Exterior','HybridExterior.png',2);
+INSERT INTO car_features VALUES (NULL,'12.3” Fully Digital Gauge Cluster',
+'Standard on Limited and Platinum, the 12.3-in. fully digital gauge cluster presents turn-by-turn directions, safety info, alerts and more, all at a glance, so you can keep your eyes on the road.'
+,'Interior','HybridInterior.png',2);
+INSERT INTO car_features VALUES (NULL,'12.3-In. Toyota Audio Multimedia Display',
+'The available 12.3-in. multimedia display is your hub for accessing playlists, podcasts and entertainment options with ease. As you make your way to your destination, you can stay connected with mobile apps on demand. Best of all, Highlander Hybrid allows you to access its system controls with the sound of your voice.'
+,'Technology','HybridTechnology.png',2);
+
+
+INSERT INTO car_features VALUES (NULL,'Ground Clearance',
+'Toyota Crown’s magnetic look is unlike anything you’ve seen before. With 5.8-in. of ground clearance, its elevated cabin sits higher than traditional sedans. And its sleek and aerodynamic shape gives Toyota Crown a look that immediately catches your eye.'
+,'Exterior','CrownExterior.png',3);
+INSERT INTO car_features VALUES (NULL,'Elevated Cabin With Memory Seats',
+'Toyota Crown’s driver-focused cockpit creates an instinctual connection between driver and machine. Inside its elevated cabin, Toyota Crown features sophisticated soft-touch materials, elegant bronze-colored details and available leather-trimmed seats.'
+,'Interior','CrownInterior.png',3);
+INSERT INTO car_features VALUES (NULL,'Advanced Park',
+'Toyota Crown’s available Advanced Park * makes fitting into a tight spot as simple as pressing a button. Just sit back, take your hands off the wheel and watch this advanced system work its magic.'
+,'Technology','CrownTechnology.png',3);
+
+
+INSERT INTO car_features VALUES (NULL,'LED Lighting',
+'Prius Prime features visually striking Quad-LED projector headlights and available LED fog lights and accent lights to help you see more of what matters. In the rear, the taillights are equipped with LEDs that not only produce a brighter light, but also naturally consume less energy.'
+,'Exterior','PrimeExterior.png',4);
+INSERT INTO car_features VALUES (NULL,'Seating for Five',
+'Prius Prime seats up to five, plus has room for your things. Get ready to treat your passengers to space filled with premium materials, and make the most of every moment.'
+,'Interior','PrimeInterior.png',4);
+INSERT INTO car_features VALUES (NULL,'Apple CarPlay®',
+'With Apple CarPlay® * compatibility standard, you can connect your compatible iPhone® * to Prius Prime’s audio multimedia system. Ask Siri® * to play your favorite song, send messages, get directions and more—all while maintaining focus on your drive. Screen depiction accurate at time of posting.'
+,'Technology','PrimeTechnology.png',4);
+
+
+INSERT INTO car_features VALUES (NULL,'SR5 SX Package',
+'Black overfenders and exterior badging. Black 16-in. wheels and outside mirrors. A tailored SX bed graphic. The SX Package allows you to outfit your Tacoma SR5 with unique details, to make a striking first impression'
+,'Exterior','TacomaExterior.png',5);
+INSERT INTO car_features VALUES (NULL,'A Tough and Refined Interior',
+'Tacoma is built to handle the demands of a hard-charging outing. Its interior features soft-touch materials to boost your comfort. And Tacoma Limited and TRD Pro add leather-trimmed seating surfaces for the ultimate in tough sophistication.'
+,'Interior','TacomaInterior.png',5);
+INSERT INTO car_features VALUES (NULL,'Tacoma Trail Special Edition',
+'Tacoma Trail Special Edition is built to hit the trail running and provides the perfect blend of utility and off-road performance. Equipped with 1.1-in. front and 0.5-in. rear suspension lift and a standard electronically locking rear differential, this truck is designed to get you through rough patches on and off the trail.*'
+,'Performance','TacomaPerformance.png',5);
+
+
+
+INSERT INTO car_features VALUES (NULL,'Design',
+'Tundra flexes some muscle with a look that takes it to a whole new level.'
+,'Exterior','PriusPrimeExterior.png',6);
+INSERT INTO car_features VALUES (NULL,'Panoramic Moonroof',
+'With just the push of a button, Tundra’s available panoramic moonroof opens to give you a glimpse of the big, wide world waiting to be explored. And to raise the bar on Tundra’s premium feel, Capstone’s luxurious interior is outfitted with dark American Walnut trim, semi-aniline leather-trimmed seats, and a distinct two-tone black-and-white theme.'
+,'Interior','PriusPrimeInterior.png',6);
+INSERT INTO car_features VALUES (NULL,'14-In. Toyota Audio Multimedia Touchscreen',
+'Get a better view of what’s around you on Tundra’s impressive available 14-in. audio multimedia touchscreen. Synced up to multiple cameras placed around Tundra, the large interactive display lets you choose different views—as if you had spotters with you.'
+,'Technology','PriusPrimeTechnology.png',6);
+
+INSERT INTO car_features VALUES (NULL,'Captivating Exterior Design',
+'Highlander’s bold design is hard to ignore. Its sculpted shape and contoured lines display the perfect balance between power and refinement. Now available in the Cypress color, it sets a new standard for curb appeal. Get ready to turn heads wherever you go.'
+,'Exterior','HighlanderExterior.png',7);
+INSERT INTO car_features VALUES (NULL,'12.3” Fully Digital Gauge Cluster',
+'Standard on Limited and Platinum, the 12.3-in. fully digital gauge cluster presents turn-by-turn directions, safety info, alerts and more, all at a glance, so you can keep your eyes on the road.'
+,'Interior','HighlanderInterior.png',7);
+INSERT INTO car_features VALUES (NULL,'12.3-In. Toyota Audio Multimedia Display',
+'The available 12.3-in. multimedia display is your hub for accessing playlists, podcasts and entertainment options with ease. As you make your way to your destination, you can stay connected with mobile apps on demand. Best of all, Highlander allows you to access its system controls with the sound of your voice.'
+,'Technology','HighlanderTechnology.png',7);
+
+
+INSERT INTO car_features VALUES (NULL,'Highlander Hybrid Bronze Edition',
+'Make a grand entrance wherever you go with the Highlander Hybrid Bronze Edition. From the 18-in. bronze-finished wheels to the mid-century-inspired embossed fabric seat inserts and bronze-colored stitching throughout the cabin, this special edition is decorated with subtle yet eye-catching details inside and out.'
+,'Exterior','HybridExterior.png',8);
+INSERT INTO car_features VALUES (NULL,'12.3” Fully Digital Gauge Cluster',
+'Standard on Limited and Platinum, the 12.3-in. fully digital gauge cluster presents turn-by-turn directions, safety info, alerts and more, all at a glance, so you can keep your eyes on the road.'
+,'Interior','HybridInterior.png',8);
+INSERT INTO car_features VALUES (NULL,'12.3-In. Toyota Audio Multimedia Display',
+'The available 12.3-in. multimedia display is your hub for accessing playlists, podcasts and entertainment options with ease. As you make your way to your destination, you can stay connected with mobile apps on demand. Best of all, Highlander Hybrid allows you to access its system controls with the sound of your voice.'
+,'Technology','HybridTechnology.png',8);
+
+
+INSERT INTO car_features VALUES (NULL,'Ground Clearance',
+'Toyota Crown’s magnetic look is unlike anything you’ve seen before. With 5.8-in. of ground clearance, its elevated cabin sits higher than traditional sedans. And its sleek and aerodynamic shape gives Toyota Crown a look that immediately catches your eye.'
+,'Exterior','CrownExterior.png',9);
+INSERT INTO car_features VALUES (NULL,'Elevated Cabin With Memory Seats',
+'Toyota Crown’s driver-focused cockpit creates an instinctual connection between driver and machine. Inside its elevated cabin, Toyota Crown features sophisticated soft-touch materials, elegant bronze-colored details and available leather-trimmed seats.'
+,'Interior','CrownInterior.png',9);
+INSERT INTO car_features VALUES (NULL,'Advanced Park',
+'Toyota Crown’s available Advanced Park * makes fitting into a tight spot as simple as pressing a button. Just sit back, take your hands off the wheel and watch this advanced system work its magic.'
+,'Technology','CrownTechnology.png',9);
+
+
+INSERT INTO car_features VALUES (NULL,'LED Lighting',
+'Prius Prime features visually striking Quad-LED projector headlights and available LED fog lights and accent lights to help you see more of what matters. In the rear, the taillights are equipped with LEDs that not only produce a brighter light, but also naturally consume less energy.'
+,'Exterior','PrimeExterior.png',10);
+INSERT INTO car_features VALUES (NULL,'Seating for Five',
+'Prius Prime seats up to five, plus has room for your things. Get ready to treat your passengers to space filled with premium materials, and make the most of every moment.'
+,'Interior','PrimeInterior.png',10);
+INSERT INTO car_features VALUES (NULL,'Apple CarPlay®',
+'With Apple CarPlay® * compatibility standard, you can connect your compatible iPhone® * to Prius Prime’s audio multimedia system. Ask Siri® * to play your favorite song, send messages, get directions and more—all while maintaining focus on your drive. Screen depiction accurate at time of posting.'
+,'Technology','PrimeTechnology.png',10);
+
+
+INSERT INTO car_features VALUES (NULL,'SR5 SX Package',
+'Black overfenders and exterior badging. Black 16-in. wheels and outside mirrors. A tailored SX bed graphic. The SX Package allows you to outfit your Tacoma SR5 with unique details, to make a striking first impression'
+,'Exterior','TacomaExterior.png',11);
+INSERT INTO car_features VALUES (NULL,'A Tough and Refined Interior',
+'Tacoma is built to handle the demands of a hard-charging outing. Its interior features soft-touch materials to boost your comfort. And Tacoma Limited and TRD Pro add leather-trimmed seating surfaces for the ultimate in tough sophistication.'
+,'Interior','TacomaInterior.png',11);
+INSERT INTO car_features VALUES (NULL,'Tacoma Trail Special Edition',
+'Tacoma Trail Special Edition is built to hit the trail running and provides the perfect blend of utility and off-road performance. Equipped with 1.1-in. front and 0.5-in. rear suspension lift and a standard electronically locking rear differential, this truck is designed to get you through rough patches on and off the trail.*'
+,'Performance','TacomaPerformance.png',11);
+
+
+
+INSERT INTO car_features VALUES (NULL,'Design',
+'Tundra flexes some muscle with a look that takes it to a whole new level.'
+,'Exterior','PriusPrimeExterior.png',12);
+INSERT INTO car_features VALUES (NULL,'Panoramic Moonroof',
+'With just the push of a button, Tundra’s available panoramic moonroof opens to give you a glimpse of the big, wide world waiting to be explored. And to raise the bar on Tundra’s premium feel, Capstone’s luxurious interior is outfitted with dark American Walnut trim, semi-aniline leather-trimmed seats, and a distinct two-tone black-and-white theme.'
+,'Interior','PriusPrimeInterior.png',12);
+INSERT INTO car_features VALUES (NULL,'14-In. Toyota Audio Multimedia Touchscreen',
+'Get a better view of what’s around you on Tundra’s impressive available 14-in. audio multimedia touchscreen. Synced up to multiple cameras placed around Tundra, the large interactive display lets you choose different views—as if you had spotters with you.'
+,'Technology','PriusPrimeTechnology.png',12);
+
+CREATE TABLE car_Gallery(
+   id_car_Gallery INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    classCG VARCHAR(30),
+    srcCG VARCHAR(100),
+   id_car_Card INT,
+  CONSTRAINT Gallery_FORIGN_KEY FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)  
+);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','HighlanderExteriorGallery.png',1);
+INSERT INTO car_gallery VALUES(NULL,'Interior','HighlanderInteriorGallery.png',1);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery1.png',1);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery2.png',1);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery3.png',1);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery4.png',1);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','HybridExteriorGallery.png',2);
+INSERT INTO car_gallery VALUES(NULL,'Interior','HybridInteriorGallery.png',2);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery1.png',2);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery2.png',2);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery3.png',2);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery4.png',2);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','CrownExteriorGallery.png',3);
+INSERT INTO car_gallery VALUES(NULL,'Interior','CrownInteriorGallery.png',3);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery1.png',3);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery2.png',3);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery3.png',3);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery4.png',3);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','PrimeExteriorGallery.png',4);
+INSERT INTO car_gallery VALUES(NULL,'Interior','PrimeInteriorGallery.png',4);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery1.png',4);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery2.png',4);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery3.png',4);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery4.png',4);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','TacomaExteriorGallery.png',5);
+INSERT INTO car_gallery VALUES(NULL,'Interior','TacomaInteriorGallery.png',5);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery1.png',5);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery2.png',5);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery3.png',5);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery4.png',5);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','PriusPrimesr5ExteriorGallery.png',6);
+INSERT INTO car_gallery VALUES(NULL,'Interior','PriusPrimesr5InteriorGallery.png',6);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery1.png',6);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery2.png',6);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery3.png',6);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery4.png',6);
+
+
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','HighlanderExteriorGallery.png',7);
+INSERT INTO car_gallery VALUES(NULL,'Interior','HighlanderInteriorGallery.png',7);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery1.png',7);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery2.png',7);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery3.png',7);
+INSERT INTO car_gallery VALUES(NULL,'360','HighlanderGallery4.png',7);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','HybridExteriorGallery.png',8);
+INSERT INTO car_gallery VALUES(NULL,'Interior','HybridInteriorGallery.png',8);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery1.png',8);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery2.png',8);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery3.png',8);
+INSERT INTO car_gallery VALUES(NULL,'360','HybridGallery4.png',8);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','CrownExteriorGallery.png',9);
+INSERT INTO car_gallery VALUES(NULL,'Interior','CrownInteriorGallery.png',9);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery1.png',9);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery2.png',9);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery3.png',9);
+INSERT INTO car_gallery VALUES(NULL,'360','CrownGallery4.png',9);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','PrimeExteriorGallery.png',10);
+INSERT INTO car_gallery VALUES(NULL,'Interior','PrimeInteriorGallery.png',10);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery1.png',10);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery2.png',10);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery3.png',10);
+INSERT INTO car_gallery VALUES(NULL,'360','PrimeGallery4.png',10);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','TacomaExteriorGallery.png',11);
+INSERT INTO car_gallery VALUES(NULL,'Interior','TacomaInteriorGallery.png',11);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery1.png',11);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery2.png',11);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery3.png',11);
+INSERT INTO car_gallery VALUES(NULL,'360','TacomaGallery4.png',11);
+
+INSERT INTO car_gallery VALUES(NULL,'Exterior','PriusPrimesr5ExteriorGallery.png',12);
+INSERT INTO car_gallery VALUES(NULL,'Interior','PriusPrimesr5InteriorGallery.png',12);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery1.png',12);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery2.png',12);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery3.png',12);
+INSERT INTO car_gallery VALUES(NULL,'360','PriusPrimesr5Gallery4.png',12);
+
+CREATE TABLE car_Specs(
+   id_car_Specs INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+   main_src VARCHAR(100),
+   EPA_Est_MPG VARCHAR(100),
+   EngineType VARCHAR(100),
+  
+   DriveTRAIN VARCHAR(100),
+   TOWING VARCHAR(100),
+   TECHNOLOGY VARCHAR(100),
+  
+   MileageEstimates VARCHAR(100),
+   UnloadedHeight VARCHAR(100),
+   OverallWidth VARCHAR(100),
+  
+   Fuel_tank VARCHAR(100),
+   id_car_Card INT,
+     CONSTRAINT Specs_FORIGN_KEY FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)
+);
+INSERT INTO car_specs VALUES(NULL,'Highlandermain.png','Up to an EPA-estimated 22/29 city/hwy mpg','2.4L 4-cylinder turbo','Front-Wheel Drive or All-Wheel Drive','Up to 5000-lb','Available 12.3-in multimedia touchscreen','35/35/35',NULL,NULL,'Predictive Fuel-Efficient Drive',1);
+
+INSERT INTO car_specs VALUES(NULL,'HighlanderHybridmain.png','MPG estimates (city/highway/combined) *
+35/35/35','Hybrid 2.5L 4-cyl. engine eCVT AWD',NULL,NULL,'MPG estimates (city/highway/combined) *
+35/35/35',NULL,'68.1','Overall length/width 194.9/76.0',NULL,2);
+
+INSERT INTO car_specs VALUES(NULL,'Crownmain.png','Up to an EPA-Estimated 41 MPG Combined Rating','2.5L Inline 4-Cylinder or Hybrid MAX 2.4-Liter Inline 4-Cylinder Turbocharged Hybrid',NULL,NULL,NULL,'42/41/41',NULL,'72.4','14.5',3);
+INSERT INTO car_specs VALUES(NULL,'primermain.png','54/133',NULL,NULL,NULL,NULL,'55/53/54',NULL,'57.9/69.3/182.9',NULL,4);
+INSERT INTO car_specs VALUES(NULL,'Tacomamain.png','18/22','20/23','278 HP/265 Lb.-Ft.','Maximum towing capacity (lb.) * 6400',NULL,'18/22/18',NULL,'74.4','21.1',5);
+INSERT INTO car_specs VALUES(NULL,'Tundramain.png','18/24','4WDemand part-time 4-Wheel Drive with electronically controlled 2-speed transfer case (high/low range)','Class-IV towing hitch receiver and wiring harness with 7-pin/4-pin connector *','11,120',NULL,'17/22/19',NULL,'80.2','32.2',6);
+
+INSERT INTO car_specs VALUES(NULL,'Highlandermain.png','Up to an EPA-estimated 22/29 city/hwy mpg','2.4L 4-cylinder turbo','Front-Wheel Drive or All-Wheel Drive','Up to 5000-lb','Available 12.3-in multimedia touchscreen','21/28/24',NULL,NULL,'Predictive Fuel-Efficient Drive',7);
+
+INSERT INTO car_specs VALUES(NULL,'HighlanderHybridmain.png','MPG estimates (city/highway/combined) *
+
+21/28/24','Hybrid 2.5L 4-cyl. engine eCVT AWD',NULL,NULL,'MPG estimates (city/highway/combined) *
+21/28/24',NULL,'68.1','Overall length/width 194.9/76.0',NULL,8);
+
+INSERT INTO car_specs VALUES(NULL,'Crownmain.png','Up to an EPA-Estimated 41 MPG Combined Rating','2.5L Inline 4-Cylinder or Hybrid MAX 2.4-Liter Inline 4-Cylinder Turbocharged Hybrid',NULL,NULL,NULL,'42/41/41',NULL,'72.4','14.5',9);
+INSERT INTO car_specs VALUES(NULL,'primermain.png','54/133',NULL,NULL,NULL,NULL,'55/53/54',NULL,'57.9/69.3/182.9',NULL,10);
+INSERT INTO car_specs VALUES(NULL,'Tacomamain.png','18/22','3.5L V6 engine AT 4x4 5-ft. bed Double Cab','4WDemand part-time 4WD with electronically controlled transfer case and Automatic Limited-Slip Differential (Auto LSD) *','Maximum towing capacity (lb.) * 6400',NULL,'18/22/18',NULL,'75.2','21.1',11);
+INSERT INTO car_specs VALUES(NULL,'Tundramain.png','18/23','4WDemand part-time 4-Wheel Drive with electronically controlled 2-speed transfer case (high/low range)','Class-IV towing hitch receiver and wiring harness with 7-pin/4-pin connector *','10,890',NULL,'17/22/19',NULL,'80.2','32.2',12);
+CREATE TABLE color(
+    id_color INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    exteriorcolor VARCHAR(100),
+    interiorcolor VARCHAR(100),
+    srcCO VARCHAR(100),
+    id_car_Card INT,
+    CONSTRAINT color_FORIGN_KEY FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)
+);
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','GRAPHITE FABRIC','HighlanderExteriorBlack1.png',1);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','GRAPHITE FABRIC','HighlanderExteriorWhite1.png',1);
+INSERT INTO color VALUES (NULL,'RUBY FLARE PEARL','GRAPHITE FABRIC','HighlanderExteriorRed1.png',1);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','GRAPHITE FABRIC','HybridExteriorBlack1.png',2);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','GRAPHITE FABRIC','HybridExteriorWhite1.png',2);
+INSERT INTO color VALUES (NULL,'RUBY FLARE PEARL','GRAPHITE FABRIC','HybridExteriorRed1.png',2);
+
+
+INSERT INTO color VALUES (NULL,'BLACK','BLACK FABRIC','CrownExteriorBlack1.png',3);
+INSERT INTO color VALUES (NULL,'OXYGEN WHITE','BLACK FABRIC','CrownExteriorWhite1.png',3);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','CrownExteriorRed1.png',3);
+
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','PrimeExteriorBlack1.png',4);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','PrimeExteriorWhite1.png',4);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','PrimeExteriorRed1.png',4);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','TacomaExteriorBlack1.png',5);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','TacomaExteriorWhite1.png',5);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','TacomaExteriorRed1.png',5);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','Prime2ExteriorBlack1.png',6);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','Prime2ExteriorWhite1.png',6);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','Prime2ExteriorRed1.png',6);
+
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','GRAPHITE FABRIC','HighlanderExteriorBlack1.png',7);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','GRAPHITE FABRIC','HighlanderExteriorWhite1.png',7);
+INSERT INTO color VALUES (NULL,'RUBY FLARE PEARL','GRAPHITE FABRIC','HighlanderExteriorRed1.png',7);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','GRAPHITE FABRIC','HybridExteriorBlack1.png',8);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','GRAPHITE FABRIC','HybridExteriorWhite1.png',8);
+INSERT INTO color VALUES (NULL,'RUBY FLARE PEARL','GRAPHITE FABRIC','HybridExteriorRed1.png',8);
+
+
+INSERT INTO color VALUES (NULL,'BLACK','BLACK FABRIC','CrownExteriorBlack1.png',9);
+INSERT INTO color VALUES (NULL,'OXYGEN WHITE','BLACK FABRIC','CrownExteriorWhite1.png',9);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','CrownExteriorRed1.png',9);
+
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','PrimeExteriorBlack1.png',10);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','PrimeExteriorWhite1.png',10);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','PrimeExteriorRed1.png',10);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','TacomaExteriorBlack1.png',11);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','TacomaExteriorWhite1.png',11);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','TacomaExteriorRed1.png',11);
+
+INSERT INTO color VALUES (NULL,'MIDNIGHT BLACK METALLIC','BLACK FABRIC','Prime2ExteriorBlack1.png',12);
+INSERT INTO color VALUES (NULL,'WIND CHILL PEARL','BLACK FABRIC','Prime2ExteriorWhite1.png',12);
+INSERT INTO color VALUES (NULL,'SUPERSONIC RED','BLACK FABRIC','Prime2ExteriorRed1.png',12);
+CREATE TABLE part(
+    id_part INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    partName VARCHAR(30),
+    srcPA VARCHAR(100),
+    price Double,
+    classPA VARCHAR(30),
+    id_car_Card INT,
+     CONSTRAINT part_FORIGN_KEY FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)
+);
+
+INSERT INTO part VALUES(NULL,'Alloy Wheel Locks','WheelLocks.png',41,'Wheels',1);
+INSERT INTO part VALUES(NULL,'Alloy Wheels, Lug Nuts','WheelsLugNuts.png',4.25,'Wheels',2);
+INSERT INTO part VALUES(NULL,'Door Edge Guard','DoorEdgeGuard.png',94,'exterior',3);
+INSERT INTO part VALUES(NULL,'Door Edge Guards','DoorEdgeGuards.png',94,'exterior',3);
+
+INSERT INTO part VALUES(NULL,'Ball Mount','BallMount.png',20,'exterior',4);
+INSERT INTO part VALUES(NULL,'Ball Mount','BallMount.png',20,'exterior',5);
+INSERT INTO part VALUES(NULL,'Carpet Cargo Mar','CarpetCargoMar.png',100,'interior',2);
+INSERT INTO part VALUES(NULL,'Carpet Cargo Mar','CarpetCargoMar.png',100,'interior',6);
+
+CREATE TABLE orderU(
+    id_order INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    orderTime DATETIME,
+    deliverTime DATETIME,
+    id_dealer INT,
+  
+    id_user INT ,
+    orderType VARCHAR(30),
+    orderProcess VARCHAR(30),
+   
+    delivery BOOLEAN,
+    totalPrice DOUBLE,
+     CONSTRAINT ORDERU_FORIGN_KEY FOREIGN KEY (id_dealer) REFERENCES userAccount(id_userAccount)  ,
+     CONSTRAINT ORDERU_FORIGN_KEY2 FOREIGN KEY (id_user) REFERENCES userAccount(id_userAccount) 
+   
+);
+INSERT INTO orderu VALUES (NULL,'2022-1-1 10:00:00','2022-2-3 11:30:00',1,3,'car','delivered',true,40.420);
+INSERT INTO orderu VALUES (NULL,'2022-3-11 10:20:00','2022-3-22 11:30:00',2,4,'part','delivered',true,100);
+
+
+CREATE TABLE order_tiem(
+    id_order_tiem INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_order INT,
+    exteriorcolorO VARCHAR(50),
+    interiorcolorO VARCHAR(50),
+     
+    quantity INT,
+     PriceO DOUBLE,
+    id_car_Card INT ,
+   
+    id_part INT,
+     CONSTRAINT order_tiem_FORIGN_KEY1 FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)  ,
+     CONSTRAINT order_tiem_FORIGN_KEY2 FOREIGN KEY (id_part) REFERENCES part(id_part) , 
+     CONSTRAINT order_tiem_FORIGN_KEY3 FOREIGN KEY (id_order) REFERENCES orderU(id_order) 
+);
+INSERT INTO order_tiem VALUES (NULL,1,'MIDNIGHT BLACK METALLIC','BLACK FABRIC',10,3000,1,1);
+INSERT INTO order_tiem VALUES (NULL,2,'BLACK','BLACK FABRIC',5,1300,2,NULL);
+
+CREATE TABLE store_car(
+    id_store_car INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    priceSC double,
+    quantitySC INT,
+    id_userAccount INT ,
+   
+   id_car_Card INT,
+       CONSTRAINT store_car_FORIGN_KEY FOREIGN KEY (id_userAccount) REFERENCES userAccount(id_userAccount)  ,
+     CONSTRAINT store_car_FORIGN_KEY2 FOREIGN KEY (id_car_Card) REFERENCES car_Card(id_car_Card)  
+);
+INSERT INTO store_car VALUES(NULL,49.420,8,1,1);
+INSERT INTO store_car VALUES(NULL,47.440,7,2,1);
+INSERT INTO store_car VALUES(NULL,53.420,10,3,2);
+
+CREATE TABLE store_part(
+    id_store_part INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    priceSP double,
+    quantitySP INT,
+    id_userAccount INT ,
+   
+    id_part INT,
+     CONSTRAINT store_part_FORIGN_KEY FOREIGN KEY (id_userAccount) REFERENCES userAccount(id_userAccount)  ,
+     CONSTRAINT store_part_FORIGN_KEY2 FOREIGN KEY (id_part) REFERENCES part(id_part)  
+);
+INSERT INTO store_part VALUES(NULL,47,5,1,1);
+INSERT INTO store_part VALUES(NULL,100,7,3,2);
